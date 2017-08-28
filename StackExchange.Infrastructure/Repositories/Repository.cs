@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.Text;
 using System.Threading.Tasks;
-using StackExchange.Core.Entities;
 using StackExchange.Core.Repositories;
 
 namespace StackExchange.Infrastructure.Repositories

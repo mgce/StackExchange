@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using StackExchange.Core.Entities;
 
 namespace StackExchange.Core.Repositories
 {
-    public interface IStackRepository
+    public interface IStackRepository : IRepository<Stack>
     {
     }
 }

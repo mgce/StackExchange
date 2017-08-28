@@ -1,7 +1,6 @@
 ﻿using StackExchange.Core.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace StackExchange.Core.Entities
@@ -19,10 +18,9 @@ namespace StackExchange.Core.Entities
         public Wallet Wallet { get; protected set; }
         public ICollection<Stack> Stacks { get; set; }
 
-        public User(long userId, string email, string username, string firstName, string lastName,
+        public User(string email, string username, string firstName, string lastName,
                     string password, string salt)
         {
-            Id = userId;
             SetEmail(email);
             SetUsername(username);
             SetFullName(firstName, lastName);

@@ -1,7 +1,4 @@
 ﻿using StackExchange.Core.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StackExchange.Core.Entities
 {

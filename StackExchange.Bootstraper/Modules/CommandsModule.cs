@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 using Autofac;
+using StackExchange.Core.Commands;
 using StackExchange.Infrastructure.Commands;
 using Module = Autofac.Module;
 
