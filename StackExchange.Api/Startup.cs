@@ -6,10 +6,12 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using React.AspNet;
 using StackExchange.Bootstraper.Modules;
 using StackExchange.Core.Settings;
 using StackExchange.Infrastructure;
@@ -30,9 +32,14 @@ namespace StackExchange.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            
+            //DbContext Configuration
             services.AddDbContext<Context>(options => options.UseSqlServer("ConnectionString"));
             services.AddTransient<CompanyInitializer>();
+
+            //React Configuration
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddReact();
+
             services.AddMvc();  
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -63,7 +70,25 @@ namespace StackExchange.Api
             }
 
             var jwtSettings = app.ApplicationServices.GetService<JwtSettings>();
-            
+
+            app.UseReact(config =>
+            {
+                // If you want to use server-side rendering of React components,
+                // add all the necessary JavaScript files here. This includes
+                // your components as well as all of their dependencies.
+                // See http://reactjs.net/ for more information. Example:
+                //config
+                config.AddScript("~/Scripts/First.jsx")
+                .AddScript("~/Scripts/Second.jsx");
+
+                // If you use an external build too (for example, Babel, Webpack,
+                // Browserify or Gulp), you can improve performance by disabling
+                // ReactJS.NET's version of Babel and loading the pre-transpiled
+                // scripts. Example:
+                //config
+                //    .SetLoadBabel(false)
+                //    .AddScriptWithoutTransform("~/Scripts/bundle.server.js");
+            });
 
             app.UseAuthentication();
             app.UseMvc();
