@@ -1,6 +1,6 @@
 ﻿namespace StackExchange.Core.Entities
 {
-    public class Wallet
+    public class Wallet : BaseEntity
     {
         public User User { get; set; }
         public long UserId { get; set; }
