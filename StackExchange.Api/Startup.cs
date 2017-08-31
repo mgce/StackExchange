@@ -89,7 +89,7 @@ namespace StackExchange.Api
                 //    .SetLoadBabel(false)
                 //    .AddScriptWithoutTransform("~/Scripts/bundle.server.js");
             });
-
+            app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc(routes =>
             {
