@@ -91,8 +91,11 @@ namespace StackExchange.Api
             });
 
             app.UseAuthentication();
-            app.UseMvc();
-            companySeeder.Seed().Wait();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
+            //companySeeder.Seed().Wait();
         }
     }
 }
