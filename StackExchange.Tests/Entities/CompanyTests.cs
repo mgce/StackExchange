@@ -6,6 +6,7 @@ using Ploeh.AutoFixture;
 using Ploeh.AutoFixture.AutoMoq;
 using StackExchange.Core.Entities;
 using StackExchange.Infrastructure;
+using StackExchange.Infrastructure.EF;
 using Xunit;
 
 namespace StackExchange.Tests.Entities
@@ -26,7 +27,7 @@ namespace StackExchange.Tests.Entities
 
             var context = new Context(options);
 
-            var user = fixture.Build<User>().Without(u => u.Stacks).Create();
+            var user = fixture.Build<User>().Create();
 
             var company1 = new Company()
             {
@@ -50,7 +51,7 @@ namespace StackExchange.Tests.Entities
             };
             for(var i = 0; i < 10; i++)
             {
-                var stack = new Stack((decimal)(i+32412)/1000, 100+i,user,company2 );
+                var stack = new Stack((decimal)(i+32412)/1000, 100+i,null,company2 );
                 var stackPrice = new StackPrice()
                 {
                     Company = company2,

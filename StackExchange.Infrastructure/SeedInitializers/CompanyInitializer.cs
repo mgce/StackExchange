@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StackExchange.Core.Entities;
+using StackExchange.Infrastructure.EF;
 
 namespace StackExchange.Infrastructure.SeedInitializers
 {
@@ -21,12 +21,12 @@ namespace StackExchange.Infrastructure.SeedInitializers
         {
             if (!_context.Companies.Any())
             {
-                _context.AddRange(companies);
+                _context.AddRange(_companies);
                 await _context.SaveChangesAsync();
             }
         }
 
-        private List<Company> companies = new List<Company>()
+        private readonly List<Company> _companies = new List<Company>()
         {
             new Company()
             {

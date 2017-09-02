@@ -16,7 +16,6 @@ namespace StackExchange.Core.Entities
         public string Password { get; protected set; }
         public string Salt { get; protected set; }
         public Wallet Wallet { get; protected set; }
-        public ICollection<Stack> Stacks { get; set; }
 
         public User(string email, string username, string firstName, string lastName,
                     string password, string salt)
