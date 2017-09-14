@@ -4,6 +4,7 @@
             <tr>
                 <td>{this.props.item.name}</td>
                 <td>{this.props.item.code}</td>
+                <td><button type="button" className="btn btn-secondary">Buy</button></td>
             </tr>
         );
     }
@@ -37,8 +38,8 @@ var CompanyGridTable = React.createClass({
         this.state.items.forEach(function (item) {
             rows.push(<CompanyGridRow key={item.id} item={item}/>);
         });
-        return (<div className="table">
-            <table >
+        return (<div>
+            <table className="table table-responsive w-100 d-block d-md-table">
                 <thead>
                 <tr>
                     <th>Company</th>
