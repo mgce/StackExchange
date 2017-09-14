@@ -33,8 +33,6 @@ namespace StackExchange.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-           
-
             //React Configuration
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddReact();
@@ -42,7 +40,7 @@ namespace StackExchange.Api
             services.AddMvc();
 
             //DbContext Configuration
-            var connection = @"Data Source=DESKTOP-477PQQ8;Initial Catalog=StackExchange;Integrated Security=True;Pooling=False";
+            var connection = "Data Source=DESKTOP-477PQQ8;Initial Catalog=StackExchange;Integrated Security=True;Pooling=False";
             services.AddDbContext<Context>(options => options.UseSqlServer(connection));
             services.AddTransient<CompanyInitializer>();
 
@@ -100,7 +98,7 @@ namespace StackExchange.Api
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-            companySeeder.Seed().Wait();
+            //companySeeder.Seed().Wait();
         }
     }
 }

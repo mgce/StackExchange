@@ -8,7 +8,8 @@ namespace StackExchange.Bootstraper.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerRequest();
+            builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<CompanyRepository>().As<ICompanyRepository>().InstancePerLifetimeScope();
 
             base.Load(builder);
         }
