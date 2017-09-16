@@ -27,6 +27,9 @@ namespace StackExchange.Core.Entities
             CreatedAt = DateTime.UtcNow;
         }
 
+        public User()
+        {}
+
         public void SetUsername(string username)
         {
             if (!NameRegex.IsMatch(username))

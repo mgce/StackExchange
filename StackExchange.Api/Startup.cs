@@ -55,10 +55,27 @@ namespace StackExchange.Api
 
             });
 
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(cfg =>
+            //{
+            //    cfg.TokenValidationParameters = new TokenValidationParameters()
+            //    {
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:key"])),
+            //        ValidIssuer = Configuration["Token:issuer"],
+            //        ValidAudience = Configuration["Token:Audience"],
+            //        ValidateIssuerSigningKey = true,
+            //        ValidateLifetime = true
+            //    };
+            //});
+
             var builder = new ContainerBuilder();
             builder.Populate(services);
             builder.RegisterModule(new RepositoryModule());
             builder.RegisterModule(new CommandsModule());
+            builder.RegisterModule(new OtherModule());
 
             ApplicationContainer = builder.Build();
             return new AutofacServiceProvider(ApplicationContainer);

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
+using Autofac.Core;
 using StackExchange.Core.Commands;
+using StackExchange.Infrastructure.CommandHandlers.Users;
 using StackExchange.Infrastructure.Commands;
 using Module = Autofac.Module;
 
@@ -12,23 +15,22 @@ namespace StackExchange.Bootstraper.Modules
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-            var assembly = typeof(ICommand).GetTypeInfo().Assembly;
-            builder.RegisterAssemblyTypes(assembly).Where(x => x.IsAssignableTo<ICommandHandler>())
-                .AsImplementedInterfaces();
 
-            builder.Register<Func<Type, ICommandHandler>>(c =>
-            {
-                var ctx = c.Resolve<IComponentContext>();
+            var assemblyFirst = typeof(UserCommandHandler).GetTypeInfo().Assembly;
+            var assemblySeccond = typeof(ICommandHandler<>).GetTypeInfo().Assembly;
 
-                return t =>
-                {
-                    var handlerType = typeof(ICommandHandler<>).MakeGenericType(t);
-                    return (ICommandHandler) ctx.Resolve(handlerType);
-                };
-            });
+            builder.RegisterAssemblyTypes(assemblyFirst)
+                .AsClosedTypesOf(typeof(ICommandHandler<>))
+                .InstancePerLifetimeScope();
+
+            builder.RegisterAssemblyTypes(assemblySeccond)
+                .AsClosedTypesOf(typeof(ICommandHandler<>))
+                .InstancePerLifetimeScope();
 
             builder.RegisterType<CommandBus>()
-                .AsImplementedInterfaces();
+                .As<ICommandBus>()
+                .InstancePerLifetimeScope();
+
         }
     }
 }
