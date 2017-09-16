@@ -46,10 +46,11 @@ namespace StackExchange.Infrastructure.CommandHandlers.Users
                 throw new Exception($"User with email: '{command.Email}' already exists.");
             }
 
-            var salt = Guid.NewGuid().ToString("N");
-            user = new User(command.Email, command.Password, 
+            var salt = _encrypter.GetSalt(command.Password);
+            var password = _encrypter.GetHash(command.Password, salt);
+            user = new User(command.Email, command.Username, 
                 command.FirstName, command.LastName,
-                command.Username, salt);
+                password, salt);
 
             await _userRepository.AddAsync(user);
             await _userRepository.SaveChangesAsync();
