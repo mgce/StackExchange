@@ -96,8 +96,8 @@ var RegistrationForm = React.createClass({
                         this.getInitialState()
                     );
                 }.bind(this),
-                error: function(e) {
-                    console.log(e);
+                error: function(response) {
+                    console.log(response);
                     alert('Error! Please try again');
                 }
             });
@@ -177,6 +177,6 @@ var RegistrationForm = React.createClass({
 });
 
 ReactDOM.render(
-    <RegistrationForm dataUrl="/Users/Create"/>,
+    <RegistrationForm dataUrl="/Account/Register"/>,
     document.getElementById('registration')
 )

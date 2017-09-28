@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using React.AspNet;
 using StackExchange.Bootstraper.Modules;
+using StackExchange.Core.Entities;
 using StackExchange.Core.Settings;
 using StackExchange.Infrastructure;
 using StackExchange.Infrastructure.EF;
@@ -44,32 +46,28 @@ namespace StackExchange.Api
             services.AddDbContext<Context>(options => options.UseSqlServer(connection));
             services.AddTransient<CompanyInitializer>();
 
+            //JWT Settings
+            services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
+        
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = "http://localhost:5000",
+                    ValidateIssuer = true,
+                    ValidIssuer = Configuration.GetSection("JWTSettings:Issuer").Value,
+                    ValidateAudience = true,
+                    ValidAudience = Configuration.GetSection("JWTSettings:Audience").Value,
                     ValidateIssuerSigningKey = true,
-                    //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt),
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.ASCII.GetBytes(
+                            Configuration.GetSection("JWTSettings:SecretKey").Value)),
                 };
-
             });
 
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(cfg =>
-            //{
-            //    cfg.TokenValidationParameters = new TokenValidationParameters()
-            //    {
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:key"])),
-            //        ValidIssuer = Configuration["Token:issuer"],
-            //        ValidAudience = Configuration["Token:Audience"],
-            //        ValidateIssuerSigningKey = true,
-            //        ValidateLifetime = true
-            //    };
-            //});
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<Context>().AddDefaultTokenProviders();
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
@@ -93,21 +91,8 @@ namespace StackExchange.Api
 
             app.UseReact(config =>
             {
-                // If you want to use server-side rendering of React components,
-                // add all the necessary JavaScript files here. This includes
-                // your components as well as all of their dependencies.
-                // See http://reactjs.net/ for more information. Example:
-                //config
                 config.AddScript("~/Scripts/First.jsx")
                 .AddScript("~/Scripts/Second.jsx");
-
-                // If you use an external build too (for example, Babel, Webpack,
-                // Browserify or Gulp), you can improve performance by disabling
-                // ReactJS.NET's version of Babel and loading the pre-transpiled
-                // scripts. Example:
-                //config
-                //    .SetLoadBabel(false)
-                //    .AddScriptWithoutTransform("~/Scripts/bundle.server.js");
             });
             app.UseStaticFiles();
             app.UseAuthentication();

@@ -2,20 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Identity;
 
 namespace StackExchange.Core.Entities
 {
-    public class User : BaseEntity
+    public class User : IdentityUser
     {
         private static readonly Regex NameRegex = new Regex("^(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9._.-]+(?<![_.-])$");
-
-        public string Email { get; protected set; }
-        public string Username { get; protected set; }
         public string FirstName { get; protected set; }
         public string LastName { get; protected set; }
         public string Password { get; protected set; }
         public string Salt { get; protected set; }
         public Wallet Wallet { get; protected set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public User(string email, string username, string firstName, string lastName,
                     string password, string salt)
@@ -25,6 +25,15 @@ namespace StackExchange.Core.Entities
             SetFullName(firstName, lastName);
             SetPassword(password, salt);
             CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
+        }
+        public User(string email, string username, string firstName, string lastName)
+        {
+            SetEmail(email);
+            SetUsername(username);
+            SetFullName(firstName, lastName);
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         public User()
@@ -44,7 +53,7 @@ namespace StackExchange.Core.Entities
                     "Username is invalid.");
             }
 
-            Username = username.ToLowerInvariant();
+            UserName = username.ToLowerInvariant();
             UpdatedAt = DateTime.UtcNow;
         }
 

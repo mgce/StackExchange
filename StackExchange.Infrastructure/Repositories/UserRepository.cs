@@ -24,7 +24,7 @@ namespace StackExchange.Infrastructure.Repositories
         public async Task<User> GetByUsernameAsync(string username)
         {
             return await _context.Set<User>()
-                .SingleOrDefaultAsync(u => u.Username == username);
+                .SingleOrDefaultAsync(u => u.UserName == username);
         }
     }
 }

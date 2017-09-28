@@ -1,17 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using StackExchange.Core.Entities;
 using DbContext = Microsoft.EntityFrameworkCore.DbContext;
 
 namespace StackExchange.Infrastructure.EF
 {
-    public class Context : DbContext 
+    public class Context : IdentityDbContext<User>
     {
         public Context(DbContextOptions<Context> options) : base((DbContextOptions) options)
         {
         }
 
         
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<Stack> Stacks { get; set; }
         public DbSet<StackPrice> StackPrices { get; set; }
@@ -35,6 +36,7 @@ namespace StackExchange.Infrastructure.EF
                 .HasOne(s => s.Company)
                 .WithMany(c => c.ActualStackPrice)
                 .HasForeignKey(s => s.CompanyId);
+
             base.OnModelCreating(modelBuilder);
         }
 
