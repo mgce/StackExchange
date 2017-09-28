@@ -54,13 +54,13 @@ namespace StackExchange.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(dto.Email, dto.Password, false, false);
+                var result = await _signInManager.PasswordSignInAsync(dto.Username, dto.Password, false, false);
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByEmailAsync(dto.Email);
+                    var user = await _userManager.FindByNameAsync(dto.Username);
                     return new JsonResult(new Dictionary<string, object>
                     {
-                        { "access_token", GetAccessToken(dto.Email) },
+                        { "access_token", GetAccessToken(user.Email) },
                         { "id_token", GetIdToken(user) }
                     });
                 }

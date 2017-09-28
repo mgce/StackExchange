@@ -61,7 +61,7 @@ var RegistrationForm = React.createClass({
             Fields : []
         }
     },
-    handleSubmit: function(e) {
+    handleSubmit: function (e) {
         e.preventDefault();
 
         var validForm = true;
