@@ -69,6 +69,20 @@ namespace StackExchange.Api.Controllers
             return Error("Unexpected error");
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Login");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsername()
+        {
+            var httpconetxt = HttpContext.User;
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            return new JsonResult(user.Email);
+        }
+
         private string GetIdToken(User user)
         {
             var payload = new Dictionary<string, object>

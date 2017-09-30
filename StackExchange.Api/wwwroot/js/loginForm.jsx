@@ -34,6 +34,7 @@
                     this.setState(
                         this.getInitialState()
                     );
+                    document.location.href = '/home'
                 }.bind(this),
                 error: function (response) {
                     console.log(response);

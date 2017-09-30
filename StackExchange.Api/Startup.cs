@@ -48,7 +48,7 @@ namespace StackExchange.Api
 
             //JWT Settings
             services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
-        
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -62,6 +62,10 @@ namespace StackExchange.Api
                         Encoding.ASCII.GetBytes(
                             Configuration.GetSection("JWTSettings:SecretKey").Value)),
                 };
+            }).AddCookie(options =>
+            {
+                options.LoginPath = "/login";
+                options.ExpireTimeSpan = TimeSpan.FromHours(1);
             });
 
             services.AddIdentity<User, IdentityRole>(options =>
