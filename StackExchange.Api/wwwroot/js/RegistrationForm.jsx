@@ -164,7 +164,7 @@ var RegistrationForm = React.createClass({
 
                 <div className="form-group">
                     <div className="row">
-                        <div className="col-lg-6 col-md-3">
+                        <div className="col-lg-6 col-md-6">
                             <button type="submit" value="post" id="register-submit" className="form-control btn btn-register" >
                                 Register Now
                             </button>

@@ -68,14 +68,12 @@
                 <InputField type={"password"} value={this.state.Password} label={"Password"} name={"Password"} htmlfor={"Password"} isRequired={true}
                     onChange={this.onChangePassword} onComponentMounted={this.login} messageRequired={'Password required'} />
                 <div className="form-group">
-                    <div className="row">
-                        <div className="row justify-content-center">
-                            <div className="col-sm-6">
-                                <button type="submit" value="post" id="login-submit" className="form-control btn" >
+                    <div className="row  h-100 justify-content-center align-items-center">    
+                        <div className="col-lg-6 col-md-6">
+                            <button type="submit" value="post" id="login-submit" className="form-control btn btn-login" >
                                     Login
                             </button>
-                            </div>
-                        </div>
+                         </div>
                     </div>
                 </div>
             </form>
