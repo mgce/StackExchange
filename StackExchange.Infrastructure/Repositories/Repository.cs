@@ -19,7 +19,7 @@ namespace StackExchange.Infrastructure.Repositories
             return await _context.Set<T>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IList<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }

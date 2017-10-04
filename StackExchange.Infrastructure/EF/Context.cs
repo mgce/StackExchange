@@ -7,6 +7,7 @@ namespace StackExchange.Infrastructure.EF
 {
     public class Context : IdentityDbContext<User>
     {
+
         public Context(DbContextOptions<Context> options) : base((DbContextOptions) options)
         {
         }

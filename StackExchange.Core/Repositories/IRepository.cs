@@ -7,7 +7,7 @@ namespace StackExchange.Core.Repositories
     {
         Task<T> GetByIdAsync(long id);
 
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<IList<T>> GetAllAsync();
 
         Task AddAsync(T entity);
 

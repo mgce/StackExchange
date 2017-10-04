@@ -10,6 +10,7 @@ namespace StackExchange.Bootstraper.Modules
         {
             builder.RegisterType<UserRepository>().As<IUserRepository>().InstancePerLifetimeScope();
             builder.RegisterType<CompanyRepository>().As<ICompanyRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<StackPriceRepository>().As<IStackPriceRepository>().InstancePerLifetimeScope();
 
             base.Load(builder);
         }
