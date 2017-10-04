@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using React.AspNet;
+using StackExchange.BackgroundJobs;
+using StackExchange.BackgroundJobs.Scheduler;
 using StackExchange.Bootstraper.Modules;
 using StackExchange.Core.Entities;
 using StackExchange.Core.Settings;
@@ -73,11 +75,19 @@ namespace StackExchange.Api
                 options.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<Context>().AddDefaultTokenProviders();
 
+            services.AddSingleton<IScheduledTask, GetStockPriceTask>();
+            services.AddScheduler((sender, args) =>
+            {
+                Console.WriteLine(args.Exception.Message);
+                args.SetObserved();
+            });
+
             var builder = new ContainerBuilder();
             builder.Populate(services);
             builder.RegisterModule(new RepositoryModule());
             builder.RegisterModule(new CommandsModule());
             builder.RegisterModule(new OtherModule());
+            
 
             ApplicationContainer = builder.Build();
             return new AutofacServiceProvider(ApplicationContainer);

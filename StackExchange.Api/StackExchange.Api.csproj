@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StackExchange.BackgroundJobs\StackExchange.BackgroundJobs.csproj" />
     <ProjectReference Include="..\StackExchange.Bootstraper\StackExchange.Bootstraper.csproj" />
     <ProjectReference Include="..\StackExchange.Core\StackExchange.Core.csproj" />
   </ItemGroup>
