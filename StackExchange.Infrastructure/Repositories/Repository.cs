@@ -8,7 +8,7 @@ namespace StackExchange.Infrastructure.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class 
     {
-        private readonly Context _context;
+        public readonly Context _context;
 
         public Repository(Context context)
         {

@@ -23,7 +23,7 @@ namespace StackExchange.BackgroundJobs
             _stackPriceRepository = stackPriceRepository;
         }
 
-        public string Schedule => "20 0 * * *";
+        public string Schedule => "*/1 * * * *";
 
         public async Task ExecuteAsync(CancellationToken cancellationToken)
         {

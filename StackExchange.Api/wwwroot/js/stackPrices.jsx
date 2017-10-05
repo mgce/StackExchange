@@ -3,7 +3,7 @@
         return (
             <tr>
                 <td>{this.props.item.name}</td>
-                <td>{this.props.item.code}</td>
+                <td>{this.props.item.price}</td>
                 <td><button type="button" className="btn btn-secondary">Buy</button></td>
             </tr>
         );
@@ -29,8 +29,10 @@ var CompanyGridTable = React.createClass({
             }.bind(this));
     },
 
-    componentDidMount: function() {
+    componentDidMount: function () {
+        var self = this;
         this.loadCompaniesFromServer();
+        setInterval(() => self.loadCompaniesFromServer(), 10000);
     },
 
     render: function () {
